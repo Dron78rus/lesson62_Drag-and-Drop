@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      p {
+        font-weight: bold;
+      }
+      .topic {
+        text-decoration: underline;
+        margin: 10px;
+      }
+      .task {
+        margin: 20px 10px;
+      }
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        width: 600px;
+        height: 200px;
+        border: 1px green solid;
+      }
+      .movableElement {
+        height: 75px;
+        width: 100px;
+        border: blue dashed 1px;
+        margin: 10px 10px 0px 10px;
+      }
+      .receivingElement {
+        height: 200px;
+        width: 600px;
+        border: red solid 1px;
+        margin: 20px 0;
+        display: flex;
+        flex-wrap: wrap;
+        text-align: center;
+        vertical-align: top;
+      }
+    </style>
+
+    <p>Задание 1</p>
+
+    <div class="topic">Изображение вместо копии элемента</div>
+    <div class="task">
+      Сделайте так, чтобы вместо изображения перетягиваемого элемента показывалась заданная картинка.
+    </div>
+
+    <div class="container">
+      <div class="movableElement" draggable="true">Аааа</div>
+      <div class="movableElement" draggable="true">Бббб</div>
+      <div class="movableElement" draggable="true">Вввв</div>
+      <div class="movableElement" draggable="true">Гггг</div>
+      <div class="movableElement" draggable="true">Дддд</div>
+      <div class="movableElement" draggable="true">Ееее</div>
+      <div class="movableElement" draggable="true">Ёёёё</div>
+    </div>
+
+    <div class="receivingElement">
+    <script>
+      // http://new.code.mu/ru/javascript/book/drag-and-drop/image-instead-of-element-copy/
+
+
+      // Задание 1
+
+      const d = document
+      const movableElements = d.querySelectorAll('.movableElement')
+      const receivingElement = d.querySelector('.receivingElement')
+
+      let img = new Image()
+      img.src = 'https://klyker.com/wp-content/uploads/2014/08/heavy-loads-4-300x225.jpg'
+     
+      movableElements.forEach((elem, index) => {
+        elem.addEventListener('dragstart', function(e) {
+         e.dataTransfer.setDragImage(img, e.offsetX, e.offsetY)
+         e.dataTransfer.setData('itemNumber', index)
+        })
+      })
+
+      receivingElement.addEventListener('dragover', (e) =>{
+        e.preventDefault()
+      })
+
+      receivingElement.addEventListener('drop', function(e) { 
+        this.appendChild(movableElements[e.dataTransfer.getData('itemNumber')])
+      })
+
+    </script>
+  </body>
+</html>
